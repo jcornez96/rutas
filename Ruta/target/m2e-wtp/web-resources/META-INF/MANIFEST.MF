@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: Ruta
+Implementation-Version: 1.0.0.BUILD-SNAPSHOT
+Built-By: juani
+Implementation-Vendor-Id: es.jcornez.ruta
+Build-Jdk: 1.8.0_121
+Implementation-URL: http://platform.spring.io/platform/ruta/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

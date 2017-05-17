@@ -1,0 +1,71 @@
+// Spring Roo 2.0.0.RC1 [rev 28015e3] log opened at 2017-05-17 20:21:08
+project setup --topLevelPackage es.jcornez.ruta --projectName "Ruta" --java 8 --packaging WAR
+// Spring Roo 2.0.0.RC1 [rev 28015e3] log closed at 2017-05-17 20:21:08
+// Spring Roo 2.0.0.RC1 [rev 28015e3] log opened at 2017-05-17 20:21:10
+jpa setup --provider HIBERNATE --database MYSQL --databaseName rutas --hostName localhost --userName userRutas --password userRutas 
+settings add --name spring.roo.jpa.require.schema-object-name --value false
+entity jpa --class ~.entidad.Ciudad --identifierColumn ID_CIUDAD --identifierField id --identifierStrategy IDENTITY --identifierType java.lang.Long 
+field string --fieldName nombre --column NOMBRE --notNull 
+entity jpa --class ~.entidad.Pais --identifierColumn ID_PAIS --identifierField id --identifierStrategy IDENTITY --identifierType java.lang.Long
+field string --fieldName codigoPais --notNull --unique --column CODIGO_PAIS --sizeMax 2 --sizeMin 2
+field string --fieldName nombre --column nombre --notNull 
+field number --fieldName codigoMarcacion --type java.lang.Integer --column CODIGO_MARCACION 
+field set --fieldName ciudades --type ~.entidad.Ciudad --cardinality ONE_TO_MANY --mappedBy pais --force
+entity jpa --class ~.entidad.TipoUsuario --identifierColumn ID_TIPO_USUARIO --identifierField id --identifierStrategy IDENTITY --identifierType java.lang.Long 
+field string --fieldName nombre --column NOMBRE --notNull --sizeMax 45 
+entity jpa --class ~.entidad.Usuario --identifierColumn ID_USUARIO --identifierField id --identifierStrategy IDENTITY --identifierType java.lang.Long 
+field number --fieldName telefono --type java.lang.Integer --column TELEFONO --notNull --digitsInteger 15 --digitsFraction 0
+field string --fieldName nombre --column NOMBRE --notNull
+field string --fieldName apellidos --column APELLIDOS --notNull
+field date --fieldName fechaNacimiento --type java.util.Date --column FECHA_NACIMIENTO
+field string --fieldName genero --column GENERO --sizeMax 1 
+field number --fieldName codigoPostal --type java.lang.Integer  --column CODIGO_POSTAL
+field date --fieldName fechaAlta --type java.util.Date --column FECHA_ALTA
+focus --class ~.entidad.Ciudad 
+field set --fieldName usuarios --type ~.entidad.Usuario --cardinality ONE_TO_MANY
+focus --class ~.entidad.TipoUsuario
+field set --fieldName usuarios --type ~.entidad.Usuario --cardinality ONE_TO_MANY
+entity jpa --class ~.entidad.TipoRuta --identifierColumn ID_TIPO_RUTA --identifierField id --identifierStrategy IDENTITY  --identifierType java.lang.Long
+field string --fieldName nombre --column NOMBRE --notNull --sizeMax 45 
+entity jpa --class ~.entidad.Ruta --identifierColumn ID_RUTA --identifierField id --identifierStrategy IDENTITY  --identifierType java.lang.Long
+field string --fieldName nombre --column NOMBRE --notNull
+field string --fieldName descripcion --column DESCRIPCION --notNull
+field date --fieldName fechaCreacion --type java.util.Date --column FECHA_CREACION --notNull 
+field file --fieldName fotoPortada --contentType JPG --column FOTO_PORTADA 
+entity jpa --class ~.entidad.PuntoRuta --identifierColumn ID_PUNTO_RUTA --identifierField id --identifierStrategy IDENTITY --identifierType java.lang.Long 
+field number --fieldName orden --type java.lang.Integer --column ORDEN --notNull --min 0 
+field number --fieldName longitud --type java.lang.Double --column LONGITUD --notNull 
+field number --fieldName latitud --type java.lang.Double --column LATITUD --notNull 
+field string --fieldName comentario --column COMENTARIO
+entity jpa --class ~.entidad.RutaSeguida --identifierColumn ID_RUTA_SEGUIDA --identifierField id --identifierStrategy IDENTITY --identifierType java.lang.Long
+field date --fieldName fechaSeguimiento --type java.util.Date --column FECHA_SEGUIMIENTO --notNull 
+focus --class ~.entidad.Ruta
+field set --fieldName rutasSeguidas --type ~.entidad.RutaSeguida --cardinality ONE_TO_MANY 
+field set --fieldName puntosRuta --type ~.entidad.PuntoRuta --cardinality ONE_TO_MANY 
+focus --class ~.entidad.Usuario
+field set --fieldName rutasSeguidas --type ~.entidad.RutaSeguida --cardinality ONE_TO_MANY 
+field set --fieldName rutas --type ~.entidad.Ruta --cardinality ONE_TO_MANY 
+focus --class ~.entidad.Ciudad
+field set --fieldName rutas --type ~.entidad.Ruta --cardinality ONE_TO_MANY 
+focus --class ~.entidad.TipoRuta
+field set --fieldName rutas --type ~.entidad.Ruta --cardinality ONE_TO_MANY 
+dto --class ~.model.entity.FilterConfigBean 
+field number --fieldName id --type java.lang.Long 
+field string --fieldName filterConfig
+field string --fieldName orderBy --notNull 
+field string --fieldName orderDirection --notNull 
+entity projection --all 
+repository jpa --all 
+finder add --entity ~.entidad.Ruta --name queryById --formBean ~.model.entity.FilterConfigBean --returnType ~.entidad.Ruta
+finder add --entity ~.entidad.RutaSeguida --name queryById --formBean ~.model.entity.FilterConfigBean --returnType ~.entidad.RutaSeguida
+// [failed] finder add --entity ~.entidad.Usuario --name queryById --formBean ~.model.entity.FilterConfigBean --returnType ~.entidad.Ciudad
+// [failed] script --file C:\Users\juani\Documents\rutas.txt
+finder add --entity ~.entidad.Ruta --name queryById --formBean ~.model.entity.FilterConfigBean --returnType ~.entidad.RutaProjection
+finder add --entity ~.entidad.Usuario --name queryById --formBean ~.model.entity.FilterConfigBean --returnType ~.entidad.Usuario
+service --all 
+web mvc setup 
+web mvc controller --all --responseType JSON --package ~.controller --pathPrefix /rest
+web mvc finder --all --package ~.controller --responseType JSON --pathPrefix /rest
+push-in --all 
+// script --file C:\Users\juani\Documents\rutas.txt
+// Spring Roo 2.0.0.RC1 [rev 28015e3] log closed at 2017-05-17 20:27:58
